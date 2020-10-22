@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie App</title>
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body onload ="formCube()">
+    <h1 id="title" >{{title}}</h1>
+    <main>
+        <div class="portalForm">
+            <br>
+            <!-- the action attribute is what the name of the link will be -->
+             <form method="POST" action="/browse" id="userInfo" >
+                <div>
+                    <label for="userName">Username: </label>
+                    {{! Note: for is a pointer for the name of an input field (i.e. click on label go to text box)
+                    For saving to server, you need to use the same name for your name attribute as your model schema}}
+                    <input type="text" placeholder="Username e.g.jdoe123" name="userName" id="userName" required>
+                </div>
+                
+                <br>
+
+                <div>
+                    <label for="password">Password: </label>
+                    <input type="password" placeholder="Password" name="password" id="password" required>
+                </div>
+
+                <br>
+
+                <button type="submit" onkeypress="checkEnter()" class="btn login">Login</button>
+            </form>         
+            <button type="submit" name="signUp" id="signUp" class="btn sign-up">Sign-up</button>
+        </div>
+
+
+        <script>
+            let fetchURL = 'https://api.themoviedb.org/3/movie/popular?api_key=27b6fe5df9c85fb31e3d874a62a2154b&language=en-US&page=1';
+            let cubeImgs = '';
+            var posterConfiguration = "";
+            var baseURL = "";
+            var posterSize= '';
+
+            const formCube = () => {
+                fetch('https://api.themoviedb.org/3/configuration?api_key=27b6fe5df9c85fb31e3d874a62a2154b')
+                .then(res => res.json())
+                .then(data => {
+                    baseURL = data.images.base_url;
+                    posterSize = data.images.poster_sizes[3];
+                    posterConfiguration = baseURL + posterSize;
+                    console.log(data)
+                    fetch(fetchURL)
+                    .then(res => res.json())
+                    .then(data => {
+                        const movies = data.results;
+                        let imgPath = '';
+                        let backdropPath = '';
+                        for (index in movies) {
+                            imgPath = posterConfiguration + movies[index].poster_path;
+
+                            if (index < 6) {
+                                cubeImgs += `<img src=${imgPath} alt="poster path">`
+                            } else {
+                                break;
+                            }
+                        }
+    
+                        document.getElementById('cube').innerHTML = cubeImgs;
+                    })
+                }).catch(err => console.log('there was an error'))
+            }
+        </script>
+
+        <div class="cube-wrap">
+            <div class="cube" id='cube'>
+            </div>
+        </div>
+    </div>
+    </main>
+
+</body>
+</html>
