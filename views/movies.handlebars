@@ -71,16 +71,18 @@
 
                         console.log(upComingMovies[index].title)
                         output += `
-                            <div class="movie" id=${idVal}>
-                                <img src=${imgPath} alt="poster path">
-                                <h3> ${upComingMovies[index].title} </h3>
-                                <div class="ratings-content"> 
-                                    <h5> TMDb vote average: ${upComingMovies[index].vote_average}</h4>
-                                    <h5> Votes: ${upComingMovies[index].vote_count} </h5>
-                                </div>  
 
-                                <h5> Release date: ${upComingMovies[index].release_date}</h5>
-                                <button onclick="favourite('${idVal}')">Favourite</button>
+                            <div class="movie" id=${idVal}>
+                                   
+                                    <img src=${imgPath} alt="poster path">
+                                    <div class="ratings-content">
+                                        <p> ${upComingMovies[index].overview} </p>
+                                            <h3> TMDb vote average: ${upComingMovies[index].vote_average}</h4>
+                                            <h3> Votes: ${upComingMovies[index].vote_count} </h5>
+                                            <h3> Release date: ${upComingMovies[index].release_date}</h5>
+                                    </div>
+
+                                    <button onclick="favourite('${idVal}')">Favourite</button>
                             </div>
                         `                        
                     }

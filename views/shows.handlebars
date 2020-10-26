@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shows</title>
 </head>
-<body>
+<body onload="getShows()">
     <script>
         function openNav() {
             document.getElementById("mySidebar").style.width = "250px";
@@ -33,7 +33,68 @@
         <a href="./tvShows">TV Shows</a>
         <a href="./genres">Genres</a>
     </div>
+
+
     <div id="main">
+    </div>
+
+    <script>
+        let fetchURL = 'https://api.themoviedb.org/3/tv/top_rated?api_key=27b6fe5df9c85fb31e3d874a62a2154b&language=en-US&page=1'        
+        let output = '';
+        var posterConfiguration = "";
+        var baseURL = "";
+        var posterSize= '';
+        const rotateCard = (elementID) => {
+            var selectedCard = document.getElementById(elementID);
+        }
+
+        const getShows = () => {
+            fetch('https://api.themoviedb.org/3/configuration?api_key=27b6fe5df9c85fb31e3d874a62a2154b')
+            .then(res => res.json())
+            .then(data => {
+                baseURL = data.images.base_url;
+                posterSize = data.images.poster_sizes[3];
+                posterConfiguration = baseURL + posterSize;
+
+                fetch(fetchURL) 
+                .then(res => res.json()) 
+                .then(data => {
+                    const topRatedShows = data.results;
+                    let imgPath = '';
+                    let backdropPath = '';
+                    console.log(topRatedShows)
+                    for (index in topRatedShows) {
+                        var idVal =  topRatedShows[index].title;
+
+                        imgPath = posterConfiguration + topRatedShows[index].poster_path;
+                        backdropPath = posterConfiguration + topRatedShows[index].backdrop_path;
+
+                        output += `
+                            <div class="movie" id=${idVal}>
+                                <img src=${imgPath} alt="poster path">
+                                <div class="ratings-content"> 
+                                    <p>${topRatedShows[index].overview}</p>
+                                    <h3> TMDb vote average: ${topRatedShows[index].vote_average}</h4>
+                                    <h3> Votes: ${topRatedShows[index].vote_count} </h5>
+                                    <h3> Release date: ${topRatedShows[index].release_date}</h5>
+                                    
+                                </div>  
+
+                                <button onclick="favourite('${idVal}')">Favourite</button>
+                            </div>
+                        `                        
+                    }
+                    document.getElementById('showsPage-container').innerHTML = output;
+
+                })
+            }).catch(err => console.log('there were as an error fetching movies'));
+    
+        }
+    </script>
+
+
+    <div id="showsPage-container">
+
     </div>
 </body>
 </html>
