@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account</title>
+</head>
+<body>
+    <h1>Let's get you going!</h1>
+    <div class="signup-form">
+        <form action="/createUser" method="POST">
+            <div class="input-container">
+                <label for='firstName' class='name'>First name:</label>
+                <input type="text" name="firstName" id="firstName" placeholder="e.g. John" class='name-input' required>
+            </div>
+            
+            <div class="input-container">
+                <label for='lastName' class='name'>Last name:</label>
+                <input type="text" name="lastName" id="lastName" placeholder="e.g. Doe" class='name-input' required>
+            </div>
+        
+            <div class="input-container">
+                <label for='userName' class='name'>Create username:</label>
+                <input type="text" name="userName" id="userName" class='name-input' required>
+            </div>
+
+            <div class="input-container">
+                <label for='pswd' class='name'>Password:</label>
+                <input type="password" name="pswd" id="pswd" class='name-input' required>
+            </div>
+
+            <div class="input-container">
+                <label for="pswdRepeat" class='name'>Re-enter password:</label>
+                <input type="password" name="pswdRepeat" id="pswdRepeat" class='name-input' required>
+            </div>
+            <button class="signUp">Submit and start watching!</button>
+        </form>
+    </div>
+    
+</body>
+</html>

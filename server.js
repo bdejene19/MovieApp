@@ -22,12 +22,10 @@ app.get('/', (req, res) => {
         title: "Welcome to Movie Pop!"
     })
 });
-// this connects our post request to '/browse' to express app
-app.use('/browse', require('./routes/api/users'));
-app.use('/accounts', require('./routes/api/users'));
-app.use('/movies', require('./routes/api/users'));
-app.use('/tvShows', require('./routes/api/users'));
-app.use('/genres', require('./routes/api/users'));
+
+// 
+app.use('/', require('./router'));
+
 
 
 app.use(express.static(path.join(__dirname, 'public')));

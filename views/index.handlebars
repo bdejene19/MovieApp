@@ -24,15 +24,18 @@
                 <br>
 
                 <div>
-                    <label for="password">Password: </label>
+                    <label for="password">Password:</label>
                     <input type="password" placeholder="Password" name="password" id="password" required>
                 </div>
 
                 <br>
 
                 <button type="submit" onkeypress="checkEnter()" class="btn login">Login</button>
-            </form>         
-            <button type="submit" name="signUp" id="signUp" class="btn sign-up">Sign-up</button>
+            </form> 
+
+            <form action='/createUser' method="GET">
+                <button type="submit" name="signUp" id="signUp" class="btn sign-up">Sign-up</button>
+            </form>        
         </div>
 
 

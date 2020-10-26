@@ -1,6 +1,7 @@
 
 var showGenres = [];
 var movieGenres = [];
+var totalGenreList = []
 
 const getShowGenres = () => {
     const tvShowGenreURL = 'https://api.themoviedb.org/3/genre/tv/list?api_key=27b6fe5df9c85fb31e3d874a62a2154b&language=en-US';
@@ -11,9 +12,6 @@ const getShowGenres = () => {
         showGenres.push(data.name);
         console.log(genres)
     })
-
-
-
 }
 
 const getMovieGenres = () => {
@@ -28,7 +26,14 @@ const getMovieGenres = () => {
 
 const totalGenres = (list1, list2) => {
     for (index in list1) {
-        console.log(index)
+        totalGenreList.push(list1[index])
     }
+
+    var count = 0;
+    for (index2 in list2) {
+        
+    }
+
+    
 
 }

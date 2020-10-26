@@ -60,10 +60,9 @@
                                 <div class="ratings-content"> 
                                     <h5> TMDb vote average: ${movieResults[index].vote_average}</h4>
                                     <h5> Votes: ${movieResults[index].vote_count} </h5>
-                                </div>
+                                </div>  
                                 <button onclick="favourite('${idVal}')">Favourite</button>
                             </div>
-
                         `
                     }
 
@@ -93,8 +92,7 @@
                                 <div class="ratings-content"> 
                                     <h5> TMDb vote average: ${tvShows[index].vote_average}</h4>
                                     <h5> Votes: ${tvShows[index].vote_count} </h5>
-                                    <button onclick="favourite('${idVal}')">Favourite</button>
-
+                                    <button type="submit" onclick="favourite('${idVal}')">Favourite</button>
                                 </div>
                             </div>
 
@@ -115,6 +113,7 @@
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
         <a href="./browse.handlebars" class="link-btn" id='home'>Home</a>
         <a href="./accounts" id='account'>Account</a>
+        <a href="./favourites" id='favourites'>Favourite</a>
         <a href="./movies">Movies</a>
         <a href="./tvShows">TV Shows</a>
         <a href="./genres">Genres</a>
@@ -149,10 +148,12 @@
     <div class="browseSelection">
         <h2 class="content-title">Whats popular</h2>
         <div class="content-row" id='movie-row'>
+        <form method="POST" action="/favourites">
+
             <div id="popular-movies" class="popular">
                 
             </div>
-
+        </form>
 
         </div>
 

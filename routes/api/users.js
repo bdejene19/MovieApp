@@ -45,7 +45,7 @@ router.post('/', (req, res) => {
 
 })
 
-router.post('/login', (req, res) => {
+/**router.post('/login', (req, res) => {
     var username = req.body.userName;
     var password = req.body.password;
     var firstName = req.body.firstName;
@@ -76,7 +76,7 @@ router.post('/login', (req, res) => {
         } else {
             res.render('movies')
         }
-    } else {*/
+    } else {
         newUser.save(err => {
             if (err) {
                 console.log("problem")
@@ -87,13 +87,19 @@ router.post('/login', (req, res) => {
         res.render('browse');
     
     
-})
+})*/
 
 router.get('/', (req, res) => {
-    res.render('account', {
+    console.log("this is an account page")
+    res.status(200).render('account', {
         firstName: `${currentUser.firstName}`,
         lastName: `${currentUser.lastName}`,
     })
+})
+
+router.get('/tvShows', (req, res) => {
+    console.log("we in here baby")
+    res.render('shows')
 })
 
 router.put('/browse', (req, res) => {

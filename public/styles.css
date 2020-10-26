@@ -338,4 +338,15 @@ nav h1 {
 }
 .account-wrapper img {
     width: 15%;
-}                                                                        
+}
+
+
+.signup-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.input-container {
+    padding: 1%;
+}

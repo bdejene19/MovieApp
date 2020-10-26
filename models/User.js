@@ -10,8 +10,15 @@ const UserSchema = mongo.Schema({
         required: true,
     },
 
-    firstName: String,
-    lastName: String,
+    firstName: {
+        type: String,
+        required: true,
+    },
+
+    lastName: {
+        type: String,
+        required: true,
+    }
 })
 
 module.exports = mongo.model("User", UserSchema);

@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Account</title>
-    <link rel="stylesheet" href="../public/styles.css">
+    <title>Favourites</title>
 </head>
 <body>
-     <script>
+    <script>
         function openNav() {
             document.getElementById("mySidebar").style.width = "250px";
             document.getElementById("main").style.marginLeft = "250px";
@@ -18,40 +17,23 @@
         }
     </script>
 
-    
+
     <navBar class="nav">
         <button class="openbtn" onclick="openNav()">☰ Open Sidebar</button>  
-        <h2 id="title">Hi {{name}}! What do you want to watch today?</h2>
+        <h2 id="title">Don't forget to watch your favourite flicks...</h2>
 
     </navBar> 
 
-    <div id="mySidebar" class="sidebar" >
+     <div id="mySidebar" class="sidebar" >
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
         <a href="./accounts" id='account'>Account</a>
         <a href="./movies">Movies</a>
-        <a href="./tvShows">TV Shows</a>
+        <a href="./tvShows" onclick="">TV Shows</a>
         <a href="./genres">Genres</a>
     </div>
+
     <div id="main">
     </div>
-
-    <h1>{{check}}</h1>
-
-    <div class="account-wrapper">
-        <div class="user-info">
-            <img src="https://cdn.onlinewebfonts.com/svg/img_569205.png" alt="avatar" class="avatar">
-            <br>
-            Name: {{firstName}} {{lastName}} <br>
-            Username: {{userName}}
-        </div>
-
-        <div class="recently-watched">
-            This is my recently watched;
-        </div>
-
-        <div class="favourites">
-            my favourites;
-        </div>
-    </div>
+    
 </body>
 </html>
