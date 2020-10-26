@@ -74,8 +74,6 @@ router.post('/browse', (req, res) => {
     var password = req.body.password;
     var firstName = req.body.firstName;
     var lastName = req.body.lastName;
-
-    
     currentUser = userData;
 
     User.findOne({userName: userName, password: password}, (err, user) => {
@@ -103,20 +101,31 @@ router.post('/browse', (req, res) => {
 })
 
 router.get('/accounts', (req, res) => {
-    console.log("this is an account page");
-    console.log(currentUser.firstName);
     res.status(200).render('account', {
         firstName: `${currentUser.firstName}`,
         lastName: `${currentUser.lastName}`,
         userName: `${currentUser.userName}`
     })
 })
+router.get('/browse', (req, res) => {
+    res.render('browse');
+})
+
+router.get('/movies', (req, res) => { 
+    res.render('movies');
+})
 
 router.get('/tvShows', (req, res) => {
-    console.log("we in here baby")
     res.render('shows')
 })
 
+router.get('/genres', (req, res) => {
+    res.render('genres')
+})
+
+router.get('/favourites', (req, res) => {
+    res.status(200).render('favourites');
+})
 
 
 router.put('/browse', (req, res) => {
@@ -124,9 +133,7 @@ router.put('/browse', (req, res) => {
 })
 
 
-router.get('/favourites', (req, res) => {
-    res.status(200).render('favourites');
-})
+
 
 router.post('/favourites', (req, res) => {
     console.log('my req body: ', req.body);;

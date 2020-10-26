@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Movies</title>
 </head>
-<body>
+<body onload="getMovies()">
     <script>
         function openNav() {
             document.getElementById("mySidebar").style.width = "250px";
@@ -19,18 +19,83 @@
     
     <navBar class="nav">
         <button class="openbtn" onclick="openNav()">☰ Open Sidebar</button>  
-        <h2 id="title">Hi {{name}}! What do you want to watch today?</h2>
+        <h2 id="title">What kind of mood are you in?</h2>
 
     </navBar> 
-   <div id="mySidebar" class="sidebar" >
+    <div id="mySidebar" class="sidebar" >
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+        <a href="./browse" class="link-btn" id='home'>Home</a>
         <a href="./accounts" id='account'>Account</a>
+        <a href="./favourites" id='favourites'>Favourite</a>
         <a href="./movies">Movies</a>
-        <a href="./tvShows" onclick="">TV Shows</a>
+        <a href="./tvShows">TV Shows</a>
         <a href="./genres">Genres</a>
     </div>
     
     <div id="main">
+    </div>
+
+
+    <script>
+         let fetchURL = "https://api.themoviedb.org/3/movie/upcoming?api_key=27b6fe5df9c85fb31e3d874a62a2154b&language=en-US&page=1"
+        let output = '';
+        var posterConfiguration = "";
+        var baseURL = "";
+        var posterSize= '';
+
+       
+        
+        var movieResults;
+        var tvShows;
+        const getMovies = () => {
+            fetch('https://api.themoviedb.org/3/configuration?api_key=27b6fe5df9c85fb31e3d874a62a2154b')
+            .then(res => res.json())
+            .then(data => {
+                baseURL = data.images.base_url;
+                posterSize = data.images.poster_sizes[3];
+                posterConfiguration = baseURL + posterSize;
+
+                fetch(fetchURL) 
+                .then(res => res.json()) 
+                .then(data => {
+                    const upComingMovies = data.results;
+                    console.log(upComingMovies)
+                    let imgPath = '';
+                    let backdropPath = '';
+                    for (index in upComingMovies) {
+                        var idVal =  upComingMovies[index].title;
+                        idVal = idVal.replace(/\s/g, '-')
+
+                        imgPath = posterConfiguration + upComingMovies[index].poster_path;
+                        backdropPath = posterConfiguration + upComingMovies[index].backdrop_path;
+
+                        console.log(upComingMovies[index].title)
+                        output += `
+                            <div class="movie" id=${idVal}>
+                                <img src=${imgPath} alt="poster path">
+                                <h3> ${upComingMovies[index].title} </h3>
+                                <div class="ratings-content"> 
+                                    <h5> TMDb vote average: ${upComingMovies[index].vote_average}</h4>
+                                    <h5> Votes: ${upComingMovies[index].vote_count} </h5>
+                                </div>  
+
+                                <h5> Release date: ${upComingMovies[index].release_date}</h5>
+                                <button onclick="favourite('${idVal}')">Favourite</button>
+                            </div>
+                        `                        
+                    }
+                    console.log(output);
+                    document.getElementById('moviesPage-container').innerHTML = output;
+
+                })
+            }).catch(err => console.log('there were as an error fetching movies'));
+    
+        }
+    </script>
+
+
+    <div id="moviesPage-container">
+
     </div>
 
 

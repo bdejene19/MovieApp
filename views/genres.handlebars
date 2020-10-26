@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Genres</title>
 </head>
-<body>
+<body onload="getShowGenres()">
 
     <script>
         function openNav() {
@@ -21,15 +21,17 @@
 
     <navBar class="nav">
         <button class="openbtn" onclick="openNav()">☰ Open Sidebar</button>  
-        <h2 id="title">Hi {{name}}! What do you want to watch today?</h2>
+        <h2 id="title">What kind of mood are you in?</h2>
 
     </navBar> 
 
-    <div id="mySidebar" class="sidebar" >
+   <div id="mySidebar" class="sidebar" >
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+        <a href="./browse" class="link-btn" id='home'>Home</a>
         <a href="./accounts" id='account'>Account</a>
+        <a href="./favourites" id='favourites'>Favourite</a>
         <a href="./movies">Movies</a>
-        <a href="./tvShows" onclick="">TV Shows</a>
+        <a href="./tvShows">TV Shows</a>
         <a href="./genres">Genres</a>
     </div>
     <div id="main">
@@ -43,23 +45,19 @@
             fetch(tvShowGenreURL)
             .then(res => res.json())
             .then(data => {
+                console.log(data)
                 const genre = data.genres;
+                console.log(genre);
                 for (show in genre) {
                     output += `<div class='genre-type'>
                           <h2> ${genre[show].name} </h2>
                           </div>  
                         `
                 }
-                console.log('show genres: ', totalGenres)
-
+                document.getElementById('genres-container').innerHTML = output;
             })
         }
     </script>
-
-    <button onclick="getShowGenres()">fetch shows</button>
-    <button onclick="getMovieGenres()">fetch movies</button>
-
-    <button onclick="getTotalGenres()">combined list</button>
 
     <div id="genres-container">
         

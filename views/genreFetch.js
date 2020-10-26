@@ -21,19 +21,6 @@ const getMovieGenres = () => {
     .then(data => {
         movieGenres.push(data.name);
     })
-}
+};
 
-
-const totalGenres = (list1, list2) => {
-    for (index in list1) {
-        totalGenreList.push(list1[index])
-    }
-
-    var count = 0;
-    for (index2 in list2) {
-        
-    }
-
-    
-
-}
+export default genreFetch;
