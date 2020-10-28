@@ -327,18 +327,14 @@ nav h1 {
     align-items: left;
     justify-content: center;
     border: solid 3px #5fa8d3;*/
-    display: grid;
-    grid-template-rows: auto auto auto;
-    grid-template-columns: auto auto auto;
+    text-align: center;
     justify-content: space-around;
+
+    border: solid white 3px;
     
 }
 .account-wrapper > .user-info {
-    padding-top: 2%;
-    grid-row: 1;
-    grid-column: 1;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    font-size: 1em;
+    border: solid grey 3px;
 }
 .account-wrapper img {
     width: 15%;
@@ -368,26 +364,33 @@ nav h1 {
     height: 0%;
     padding: 0;
     margin-top: -1px;
-    transition: 1.5s height;
+    transition: 1s height linear;
     background-color: gainsboro;
     overflow: hidden;
 }
 
-#moviesPage-container img:hover  {
+#moviesPage-container .movie:hover  .ratings-content{
     height: 40%;
-    transition: 3s;
+    transition: 1s linear;
 }
 
-
-
-
-.movie {
+#moviesPage-container .movie {
     padding: 3vw;
 
 }
 
 .movie > .ratings-content {
     margin-top: 0;
+}
+
+/** beginning of shows page styling */
+#showsPage-container img {
+    height: 60vh;
+    width: 100%;
+}
+
+#showsPage-container .movie {
+    height: 100vh;
 }
 
 #showsPage-container {
@@ -397,11 +400,29 @@ nav h1 {
     text-align: center;
 }
 
+#showsPage-container .movie .ratings-content {
+    height: 0%;
+    padding: 0;
+    margin-top: -1px;
+    transition: 1s height linear;
+    background-color: gainsboro;
+    overflow: hidden;
+}
+
+#showsPage-container .movie:hover  .ratings-content{
+    height: 40%;
+    transition: 1s linear;
+}
+
 .movie img {
     height: 60vh;
     width: 100%;
 }
 
+#showsPage-container .movie {
+    padding: 3vw;
+
+}
 /** beginning of sign-up page styling*/
 .signup-form {
     display: flex;

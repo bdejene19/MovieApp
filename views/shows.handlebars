@@ -31,7 +31,7 @@
         <a href="./favourites" id='favourites'>Favourite</a>
         <a href="./movies">Movies</a>
         <a href="./tvShows">TV Shows</a>
-        <a href="#">Sign-out</a>
+        <a href="./index">Sign-out</a>
     </div>
 
 
@@ -74,13 +74,12 @@
                                 <img src=${imgPath} alt="poster path">
                                 <div class="ratings-content"> 
                                     <p>${topRatedShows[index].overview}</p>
-                                    <h3> TMDb vote average: ${topRatedShows[index].vote_average}</h4>
-                                    <h3> Votes: ${topRatedShows[index].vote_count} </h5>
-                                    <h3> Release date: ${topRatedShows[index].release_date}</h5>
-                                    
+                                    <br>
+                                    <p>TMDb vote average: ${topRatedShows[index].vote_average} <br>
+                                    Votes: ${topRatedShows[index].vote_count} <br>
+                                    Release date: ${topRatedShows[index].release_date}</p>
+                                    <button onclick="favourite('${idVal}')">Favourite</button>
                                 </div>  
-
-                                <button onclick="favourite('${idVal}')">Favourite</button>
                             </div>
                         `                        
                     }

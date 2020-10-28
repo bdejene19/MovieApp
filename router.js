@@ -5,6 +5,7 @@ const User = require('./models/User');
 // import mongo and connect
 
 const mongo = require('mongoose');
+const { create } = require('express-handlebars');
 mongo.connect(process.env.DB_CONNECTION, { useNewUrlParser: true, useUnifiedTopology: true}, console.log('connected to db'));
 
 router.use(express.urlencoded({extended: false}))
@@ -44,7 +45,6 @@ router.post('/createUser', (req, res) => {
         }
 
         if (!userNameTaken) {
-            console.log('userName is valid');
             if (pswd === pswdRepeat) {
                 var createdUser = new User({
                     userName: userName,
@@ -57,15 +57,15 @@ router.post('/createUser', (req, res) => {
                     if (err) {
                         console.log(err);
                     } else {
-                        res.status(200).render('browse', {
-                            name: createdUser.firstName,
-                        })         
+                        currentUser = createdUser;
+                        res.redirect(`/browse`);   
                     }
                 })
             }
 
         }
     })
+    return currentUser;
 })
 // login post
 router.post('/browse', (req, res) => {
@@ -83,7 +83,6 @@ router.post('/browse', (req, res) => {
 
         if (user) {
             currentUser = user;
-            console.log('this is my current user in browse route: ', currentUser);
             res.status(200).render('browse', {
                 name: currentUser.firstName,
             });
@@ -97,21 +96,14 @@ router.post('/browse', (req, res) => {
 })
 
 router.get('/accounts', (req, res) => {
-    console.log('current user object: ', currentUser)
-    console.log('current user id: ', currentUser._id)
-    var userAcccount;
     User.find(currentUser, (err, user) => {
         if (err) {
             console.log('there was an error');
         }
 
-        console.log(user);
-
         if (user) {
-            console.log('we found a user, this is it: ', user)
-            userAcccount = user.firstName;
-            console.log('firstname of user: ', userAcccount)
-        
+            currentUser = user;
+
         }
     })
     res.status(200).render('account', {
@@ -156,6 +148,10 @@ router.post('/favourites', (req, res) => {
     
 
     console.log('favourited movie: ', favouritedMovie);
+})
+
+router.get('/index', (req, res) => {
+    res.redirect('http://localhost:5000/');
 })
 
 module.exports = router;    
