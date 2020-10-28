@@ -19,6 +19,30 @@
     </script>
     
     <script>
+        var currFavourite ='';
+        const favourite = favourited => {
+            var idValue = favourited;
+
+            currFavourite = document.getElementById(idValue);
+            return currFavourite;
+            //var found = false;
+            
+            /**totalFavourites.forEach(alreadyFav => {
+               
+                if (alreadyFav.id === currFavourite.id) {
+                    found = true;
+                    totalFavourites.pop(alreadyFav)
+                }
+            })
+            if (found === false) {
+                totalFavourites.push(currFavourite);
+            }*/
+
+
+        }
+
+
+
         let fetchURL = 'https://api.themoviedb.org/3/movie/popular?api_key=27b6fe5df9c85fb31e3d874a62a2154b&language=en-US&page=1';
         let output = '';
         var posterConfiguration = "";
@@ -29,9 +53,7 @@
         
         var movieResults;
         var tvShows;
-        const getConfig = () => {
-
-            
+        const getConfig = () => {            
             fetch('https://api.themoviedb.org/3/configuration?api_key=27b6fe5df9c85fb31e3d874a62a2154b')
             .then(res => res.json())
             .then(data => {
@@ -50,18 +72,19 @@
                     for (index in movieResults) {
                         var idVal =  movieResults[index].title;
                         idVal = idVal.replace(/\s/g, '-')
-
                         imgPath = posterConfiguration + movieResults[index].poster_path;
                         backdropPath = posterConfiguration + movieResults[index].backdrop_path;
+
+                        // find a way to set value of favourite button as the whole div
                         output += `
                             <div class="movie-content" id=${idVal}>
                                 <img src=${imgPath} alt="poster path">
-                                <h3> ${movieResults[index].title} </h3>
+                                <h3> ${movieResults[index].title}</h3>
                                 <div class="ratings-content"> 
                                     <h5> TMDb vote average: ${movieResults[index].vote_average}</h4>
                                     <h5> Votes: ${movieResults[index].vote_count} </h5>
                                 </div>  
-                                <button onclick="favourite('${idVal}')">Favourite</button>
+                                <button name='movie' value="${idVal}">Favourite</button>
                             </div>
                         `
                     }
@@ -116,8 +139,8 @@
         <a href="./favourites" id='favourites'>Favourite</a>
         <a href="./movies">Movies</a>
         <a href="./tvShows">TV Shows</a>
-        <a href="./genres">Genres</a>
         <a href="#">Sign-out</a>
+
     </div>
     
     <div id="main">
@@ -126,7 +149,7 @@
 
     <script>
         var totalFavourites = [];
-        const favourite = favourited => {
+        /**const favourite = favourited => {
             var idValue = favourited;
             var currFavourite = document.getElementById(idValue)
             var found = false;
@@ -142,19 +165,20 @@
                 totalFavourites.push(currFavourite);
             }
 
-        }
+        }*/
 
     </script>
 
     <div class="browseSelection">
         <h2 class="content-title">Whats popular</h2>
         <div class="content-row" id='movie-row'>
-        <form method="POST" action="/favourites">
-            <div id="popular-movies" class="popular">
-                
-            </div>
-        </form>
 
+            <form method="POST" action="/favourites">
+              <div  id="popular-movies" class="popular">
+                
+                </div>
+            </form>
+         
         </div>
 
          <div class="buttons-container">

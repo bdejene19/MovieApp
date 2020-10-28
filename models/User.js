@@ -18,7 +18,13 @@ const UserSchema = mongo.Schema({
     lastName: {
         type: String,
         required: true,
-    }
+    },
+
+    favourites: [{
+        type: String, 
+        required: false,
+    }]
+
 })
 
 module.exports = mongo.model("User", UserSchema);

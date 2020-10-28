@@ -21,18 +21,18 @@
     
     <navBar class="nav">
         <button class="openbtn" onclick="openNav()">☰ Open Sidebar</button>  
-        <h2 id="title">Hi {{name}}! What do you want to watch today?</h2>
+        <h2 id="title">Your Account</h2>
 
     </navBar> 
 
-    <div id="mySidebar" class="sidebar" >
+     <div id="mySidebar" class="sidebar" >
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-        <a href="./browse" id='account'>Home</a>
-
+        <a href="./browse" class="link-btn" id='home'>Home</a>
         <a href="./accounts" id='account'>Account</a>
+        <a href="./favourites" id='favourites'>Favourite</a>
         <a href="./movies">Movies</a>
         <a href="./tvShows">TV Shows</a>
-        <a href="./genres">Genres</a>
+        <a href="#">Sign-out</a>
     </div>
     <div id="main">
     </div>
@@ -45,14 +45,11 @@
             <br>
             Name: {{firstName}} {{lastName}} <br>
             Username: {{userName}}
-        </div>
-
-        <div class="recently-watched">
-            This is my recently watched;
-        </div>
-
-        <div class="favourites">
-            my favourites;
+            <div class="modal-box">
+                <div class="modal">
+                    <button class="change-password">Edit</button>
+                </div>
+            </div>
         </div>
     </div>
 </body>

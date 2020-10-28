@@ -4,13 +4,15 @@ const User = require('./models/User');
 
 // import mongo and connect
 
-var currentUser = User();
 const mongo = require('mongoose');
 mongo.connect(process.env.DB_CONNECTION, { useNewUrlParser: true, useUnifiedTopology: true}, console.log('connected to db'));
 
 router.use(express.urlencoded({extended: false}))
 
 
+// initialize global variables:
+var currentUser = User();
+var favouritedMovie = '';
 // create user
 router.get('/createUser', (req, res) => {
     
@@ -24,14 +26,21 @@ router.post('/createUser', (req, res) => {
     var pswd = req.body.pswd;
     var pswdRepeat = req.body.pswdRepeat;
 
+    var isTaken = false;
     User.findOne({userName: userName}, (err, userNameTaken) => {
         if (err) {
             console.log('there was an error');
         }
 
 
-        if (userNameTaken !== null) {
-            console.log('sorry, username is already taken');
+        if (userNameTaken !== null && userNameTaken) {
+            console.log('entered if statement')
+            isTaken = true;
+            res.status(200).render('createUser', {
+                errorMessage: 'Either your password or username is incorrect',
+                alreadyExists: isTaken
+            })
+            
         }
 
         if (!userNameTaken) {
@@ -44,8 +53,6 @@ router.post('/createUser', (req, res) => {
                     password: pswd,
                 });
 
-                console.log('this is my new user object: ', createdUser);
-
                 createdUser.save(err => {
                     if (err) {
                         console.log(err);
@@ -56,6 +63,7 @@ router.post('/createUser', (req, res) => {
                     }
                 })
             }
+
         }
     })
 })
@@ -63,18 +71,6 @@ router.post('/createUser', (req, res) => {
 router.post('/browse', (req, res) => {
     var userName = req.body.userName;
     var password = req.body.password;
-
-    console.log(req.body);
-    var userData = new User({
-        userName: userName,
-        password: password
-    })
-
-    var userName = req.body.userName;
-    var password = req.body.password;
-    var firstName = req.body.firstName;
-    var lastName = req.body.lastName;
-    currentUser = userData;
 
     User.findOne({userName: userName, password: password}, (err, user) => {
         if (err) {
@@ -87,8 +83,9 @@ router.post('/browse', (req, res) => {
 
         if (user) {
             currentUser = user;
+            console.log('this is my current user in browse route: ', currentUser);
             res.status(200).render('browse', {
-                name: userName,
+                name: currentUser.firstName,
             });
         }
 
@@ -96,19 +93,39 @@ router.post('/browse', (req, res) => {
             res.send('incorrect password/username')
         };
     })
-
-
+    return currentUser;
 })
 
 router.get('/accounts', (req, res) => {
+    console.log('current user object: ', currentUser)
+    console.log('current user id: ', currentUser._id)
+    var userAcccount;
+    User.find(currentUser, (err, user) => {
+        if (err) {
+            console.log('there was an error');
+        }
+
+        console.log(user);
+
+        if (user) {
+            console.log('we found a user, this is it: ', user)
+            userAcccount = user.firstName;
+            console.log('firstname of user: ', userAcccount)
+        
+        }
+    })
     res.status(200).render('account', {
         firstName: `${currentUser.firstName}`,
         lastName: `${currentUser.lastName}`,
         userName: `${currentUser.userName}`
     })
+  
+    return currentUser;
 })
 router.get('/browse', (req, res) => {
-    res.render('browse');
+    res.render('browse', {
+        name: currentUser.firstName,
+    });
 })
 
 router.get('/movies', (req, res) => { 
@@ -124,7 +141,9 @@ router.get('/genres', (req, res) => {
 })
 
 router.get('/favourites', (req, res) => {
-    res.status(200).render('favourites');
+    res.status(200).render('favourites', {
+        favourites: favouritedMovie,
+    });
 })
 
 
@@ -132,12 +151,11 @@ router.put('/browse', (req, res) => {
     console.log('this is my put update: ', req.body);   
 })
 
-
-
-
 router.post('/favourites', (req, res) => {
-    console.log('my req body: ', req.body);;
-})
+    favouritedMovie = req.body.movie;
+    
 
+    console.log('favourited movie: ', favouritedMovie);
+})
 
 module.exports = router;    

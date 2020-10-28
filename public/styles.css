@@ -345,11 +345,6 @@ nav h1 {
 }
 
 
-.signup-form {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-}
 
 .input-container {
     padding: 1%;
@@ -382,4 +377,37 @@ nav h1 {
 .movie img {
     height: 60vh;
     width: 100%;
+}
+
+/** beginning of sign-up page styling*/
+.signup-form {
+    display: flex;
+    flex-direction: column; 
+    justify-content: space-around;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5%;
+    color: white;
+    position: relative;
+}
+
+.signup-form p {
+    color: red;
+}
+
+.create-user {
+    width: 30%;
+    display: flex;
+    flex-direction: column; 
+    border: solid grey 10px;
+    justify-content: space-around;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+
+}
+.input-container {
+    padding: 3%;
+    width: 50%;
+    height: fit-content;
 }
