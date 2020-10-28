@@ -73,16 +73,16 @@
                         output += `
 
                             <div class="movie" id=${idVal}>
-                                   
-                                    <img src=${imgPath} alt="poster path">
+                                    <img src=${imgPath} alt="poster path" class='movie-imgPoster'>
                                     <div class="ratings-content">
                                         <p> ${upComingMovies[index].overview} </p>
                                             <h3> TMDb vote average: ${upComingMovies[index].vote_average}</h4>
                                             <h3> Votes: ${upComingMovies[index].vote_count} </h5>
                                             <h3> Release date: ${upComingMovies[index].release_date}</h5>
+                                            <button onclick="favourite('${idVal}')">Favourite</button>
+
                                     </div>
 
-                                    <button onclick="favourite('${idVal}')">Favourite</button>
                             </div>
                         `                        
                     }

@@ -344,19 +344,42 @@ nav h1 {
     width: 15%;
 }
 
-
-
 .input-container {
     padding: 1%;
 }
-
+/** movies page styling */
 #moviesPage-container { 
     display: grid;
     grid-template-columns: auto auto auto;
     grid-template-rows: auto;
-    text-align: center;
-    
+    text-align: center; 
 }
+
+#moviesPage-container img {
+    height: 60vh;
+    width: 100%;
+}
+
+#moviesPage-container .movie {
+    height: 100vh;
+}
+
+#moviesPage-container .movie .ratings-content {
+    height: 0%;
+    padding: 0;
+    margin-top: -1px;
+    transition: 1.5s height;
+    background-color: gainsboro;
+    overflow: hidden;
+}
+
+#moviesPage-container img:hover  {
+    height: 40%;
+    transition: 3s;
+}
+
+
+
 
 .movie {
     padding: 3vw;
