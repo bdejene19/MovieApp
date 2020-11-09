@@ -96,27 +96,17 @@ router.post('/browse', (req, res) => {
 })
 
 router.get('/accounts', (req, res) => {
-    User.find(currentUser, (err, user) => {
-        if (err) {
-            console.log('there was an error');
-        }
-
-        if (user) {
-            currentUser = user;
-
-        }
-    })
-    res.status(200).render('account', {
+    res.render('account', {
         firstName: `${currentUser.firstName}`,
         lastName: `${currentUser.lastName}`,
         userName: `${currentUser.userName}`
-    })
-  
+    }) 
+
     return currentUser;
 })
 router.get('/browse', (req, res) => {
     res.render('browse', {
-        name: currentUser.firstName,
+        name: `${currentUser.firstName}`,
     });
 })
 
@@ -125,7 +115,9 @@ router.get('/movies', (req, res) => {
 })
 
 router.get('/tvShows', (req, res) => {
-    res.render('shows')
+    res.render('shows', { 
+        name: `${currentUser.firstName}`
+    })
 })
 
 router.get('/genres', (req, res) => {
@@ -136,11 +128,6 @@ router.get('/favourites', (req, res) => {
     res.status(200).render('favourites', {
         favourites: favouritedMovie,
     });
-})
-
-
-router.put('/browse', (req, res) => {
-    console.log('this is my put update: ', req.body);   
 })
 
 router.post('/favourites', (req, res) => {

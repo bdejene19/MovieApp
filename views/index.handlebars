@@ -10,37 +10,41 @@
 <body onload ="formCube()">
     <h1 id="title" >{{title}}</h1>
     <main>
-        <div class="portalForm">
-            <br>
-            <!-- the action attribute is what the name of the link will be -->
-             <form method="POST" action="/browse" id="userInfo" >
-                <!--<p id='error-message'>Sorry, either your password and/or username is incorrect</p>-->
-                <div>
-                    <label for="userName">Username: </label>
-                    {{! Note: for is a pointer for the name of an input field (i.e. click on label go to text box)
-                    For saving to server, you need to use the same name for your name attribute as your model schema}}
-                    <input type="text" placeholder="Username e.g.jdoe123" name="userName" id="userName" required>
+        <div class="login-container">
+            <form class="login-wrapper" method="POST" action="/browse">
+                <div class="myform">
+                    <input type="text" name="userName" id="userName" required>
+                    <label for="userName" class='userName-label'>
+                        <span class="userName-content">Username</span>
+                    </label>
                 </div>
                 
-                <br>
+                <div class="myform">
+                    <input type="password"  name="password" id="password" required>
+                    <label for="password" class='userName-label'>
+                        <span class="userName-content">Password</span>
+                    </label>
 
-                <div>
-                    <label for="password">Password:</label>
-                    <input type="password" placeholder="Password" name="password" id="password" required>
                 </div>
 
-                <br>
+                <div class='submission-btns'>
+                    <button type="submit" onkeypress="checkEnter()" class="btn login">Login</button>
+                </div>
+           
+            </form>
+        <form action='/createUser' method="GET">
+            <button type="submit" name="signUp" id="signUp" class="btn sign-up">Sign-up</button>
+        </form>
 
-                <button type="submit" onkeypress="checkEnter()" class="btn login">Login</button>
-            </form> 
 
-            <form action='/createUser' method="GET">
-                <button type="submit" name="signUp" id="signUp" class="btn sign-up">Sign-up</button>
-            </form> 
-                  
         </div>
-
-
+         <div class="cube-wrap">
+            <div class="cube" id='cube'>
+            </div>
+        </div>
+        
+         
+        
         <script>
             let fetchURL = 'https://api.themoviedb.org/3/movie/popular?api_key=27b6fe5df9c85fb31e3d874a62a2154b&language=en-US&page=1';
             let cubeImgs = '';
@@ -73,16 +77,13 @@
                         }
     
                         document.getElementById('cube').innerHTML = cubeImgs;
+                        console.log('cube formed')
                     })
                 }).catch(err => console.log('there was an error'))
             }
         </script>
-
-        <div class="cube-wrap">
-            <div class="cube" id='cube'>
-            </div>
-        </div>
-    </div>
+        
+        
     </main>
 
 </body>

@@ -22,9 +22,8 @@
         var currFavourite ='';
         const favourite = favourited => {
             var idValue = favourited;
+            document.getElementById(idValue).value = document.getElementById(idValue);
 
-            currFavourite = document.getElementById(idValue);
-            return currFavourite;
             //var found = false;
             
             /**totalFavourites.forEach(alreadyFav => {
@@ -83,7 +82,7 @@
                                     <h5> TMDb vote average: ${movieResults[index].vote_average}</h4>
                                     <h5> Votes: ${movieResults[index].vote_count} </h5>
                                 </div>  
-                                <button name='movie' value="${idVal}">Favourite</button>
+                                <button name='movie' value="" onclick='favourite(${idVal})'>Favourite</button>
                             </div>
                         `
                     }
@@ -110,7 +109,6 @@
                         shows += `
                             <div class="movie-content" id=${idVal}>
                                 <img src=${imgPath} alt="poster path">
-                                <h3> ${tvShows[index].original_name} </h3>
                                 <div class="ratings-content"> 
                                     <h5> TMDb vote average: ${tvShows[index].vote_average}</h4>
                                     <h5> Votes: ${tvShows[index].vote_count} </h5>
@@ -145,35 +143,12 @@
     <div id="main">
     </div>
 
-
-    <script>
-        var totalFavourites = [];
-        /**const favourite = favourited => {
-            var idValue = favourited;
-            var currFavourite = document.getElementById(idValue)
-            var found = false;
-            
-            totalFavourites.forEach(alreadyFav => {
-               
-                if (alreadyFav.id === currFavourite.id) {
-                    found = true;
-                    totalFavourites.pop(alreadyFav)
-                }
-            })
-            if (found === false) {
-                totalFavourites.push(currFavourite);
-            }
-
-        }*/
-
-    </script>
-
     <div class="browseSelection">
         <h2 class="content-title">Whats popular</h2>
         <div class="content-row" id='movie-row'>
 
             <form method="POST" action="/favourites">
-              <div  id="popular-movies" class="popular">
+                <div  id="popular-movies" class="popular">
                 
                 </div>
             </form>
@@ -184,14 +159,17 @@
             <button class="btn btn-left" id='left-movie' onclick="movieSlides(79.2)">Left</button>
             <button class="btn btn-right" id='right-movie' onclick="movieSlides(-79.2)">Right</button>
         </div>
-
+        <br><br>
         <h2 class="content-title">Top TV Shows</h2>
 
         <div class="content">
             <div class="content-row">
+                <form method="POST" action="/favourites">
                 <div id="popular-shows" class="popular">
 
                 </div>
+                </form>
+                
         </div>
         <div class="buttons-container">
             <button class="btn btn-left" id='left-show' onclick="tvSlides(79.2)" >Left</button>
@@ -200,6 +178,7 @@
         </div>
        
     </div>
+        <br><br>
 
     <script>
         let movieIndex = 0;
