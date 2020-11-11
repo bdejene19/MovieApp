@@ -24,13 +24,14 @@
             </div>
         
             <div class="input-container">
-                <p id='username-error'>{{errorMessage}}</p>
+                <p id='username-error'></p>
+
                 <label for='userName' class='name'>Create username:</label><br>
-                <input type="text" name="userName" id="userName" class='name-input' required>
+                <input type="text" name="userName" id="userName" class='name-input' id='userName' required>
             </div>
 
             <div class="input-container">
-                <p id='error-message'></p>
+                <p id='error-message'>{{errorMessage}}</p>
                 <label for='pswd' class='name'>Password:</label><br>
                 <input type="password" name="pswd" id="pswd" class='name-input' required>
             </div>
@@ -49,7 +50,21 @@
     
     <script>
         const submissionCheck = () => {
-            
+
+            var userNameTaken = {{alreadyExists}};
+            if (userNameTaken == 'true') {
+                document.getElementById('userName').style.border = 'red 1px solid'
+                document.getElementById('username-error').innerHTML = 'Username is already taken';
+
+                setTimeout(() => {
+                    document.getElementById('username-error').innerHTML = ''
+                    document.getElementById('userName').style.border = 'none'
+
+                }, 5000)
+            }
+
+
+
             var pswd = document.getElementById('pswd').value;
             var repeatPSWD = document.getElementById('pswdRepeat').value
             // have set up create password comparison => however, still need to verify username
@@ -67,17 +82,7 @@
                     document.getElementById('error-message').innerHTML = ``
 
                 }, 5000)
-
-                   console.log('isTaken bool: ', {{{alreadyExists}}});
-                   console.log('isTaken bool: ', {{alreadyExists}});
-                                      console.log('isTaken bool: ', {alreadyExists});
-
-
-                console.log('error message: ', {errorMessage});
             }
-            
-         
-
         }
     </script>
 </body>

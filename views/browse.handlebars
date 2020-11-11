@@ -22,22 +22,7 @@
         var currFavourite ='';
         const favourite = favourited => {
             var idValue = favourited;
-            document.getElementById(idValue).value = document.getElementById(idValue);
-
-            //var found = false;
-            
-            /**totalFavourites.forEach(alreadyFav => {
-               
-                if (alreadyFav.id === currFavourite.id) {
-                    found = true;
-                    totalFavourites.pop(alreadyFav)
-                }
-            })
-            if (found === false) {
-                totalFavourites.push(currFavourite);
-            }*/
-
-
+            console.log('hello');
         }
 
 
@@ -82,7 +67,8 @@
                                     <h5> TMDb vote average: ${movieResults[index].vote_average}</h4>
                                     <h5> Votes: ${movieResults[index].vote_count} </h5>
                                 </div>  
-                                <button name='movie' value="" onclick='favourite(${idVal})'>Favourite</button>
+
+                                <img src="https://www.flaticon.com/svg/static/icons/svg/130/130195.svg" alt='favourites logo' id='favouritesLogo' onclick='favourites()'>
                             </div>
                         `
                     }
@@ -112,8 +98,9 @@
                                 <div class="ratings-content"> 
                                     <h5> TMDb vote average: ${tvShows[index].vote_average}</h4>
                                     <h5> Votes: ${tvShows[index].vote_count} </h5>
-                                    <button type="submit" onclick="favourite('${idVal}')">Favourite</button>
                                 </div>
+                                <img src="https://www.flaticon.com/svg/static/icons/svg/130/130195.svg" alt='favourites logo' id='favouritesLogo' onclick='favourites()'>
+
                             </div>
 
                         `
@@ -165,9 +152,9 @@
         <div class="content">
             <div class="content-row">
                 <form method="POST" action="/favourites">
-                <div id="popular-shows" class="popular">
+                    <div id="popular-shows" class="popular">
 
-                </div>
+                    </div>
                 </form>
                 
         </div>

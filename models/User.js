@@ -23,7 +23,12 @@ const UserSchema = mongo.Schema({
     favourites: [{
         type: String, 
         required: false,
-    }]
+    }],
+
+    memberSince: {
+        type: String,
+        required: true,
+    }
 
 })
 

@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const bcrypt = require('bcrypt');
 const User = require('./models/User');
 
 // import mongo and connect
@@ -27,7 +28,8 @@ router.post('/createUser', (req, res) => {
     var pswd = req.body.pswd;
     var pswdRepeat = req.body.pswdRepeat;
 
-    var isTaken = false;
+    var signUpDate = new Date()
+    signUpDate = signUpDate.getDate() + '/'  + signUpDate.getMonth() + '/'  +  signUpDate.getFullYear();
     User.findOne({userName: userName}, (err, userNameTaken) => {
         if (err) {
             console.log('there was an error');
@@ -35,32 +37,30 @@ router.post('/createUser', (req, res) => {
 
 
         if (userNameTaken !== null && userNameTaken) {
-            console.log('entered if statement')
-            isTaken = true;
             res.status(200).render('createUser', {
-                errorMessage: 'Either your password or username is incorrect',
-                alreadyExists: isTaken
+                alreadyExists: 'true',
             })
             
         }
 
         if (!userNameTaken) {
             if (pswd === pswdRepeat) {
-                var createdUser = new User({
-                    userName: userName,
-                    firstName: firstName,
-                    lastName: lastName,
-                    password: pswd,
-                });
+                    var createdUser = new User({
+                        userName: userName,
+                        firstName: firstName,
+                        lastName: lastName,
+                        password: pswd,
+                        memberSince: signUpDate,
+                    })
 
-                createdUser.save(err => {
-                    if (err) {
-                        console.log(err);
-                    } else {
-                        currentUser = createdUser;
-                        res.redirect(`/browse`);   
-                    }
-                })
+                    createdUser.save(err => {
+                        if (err) {
+                            console.log(err);
+                        } else {
+                            currentUser = createdUser;
+                            res.redirect(`/browse`);   
+                        }
+                    })  
             }
 
         }
@@ -99,7 +99,8 @@ router.get('/accounts', (req, res) => {
     res.render('account', {
         firstName: `${currentUser.firstName}`,
         lastName: `${currentUser.lastName}`,
-        userName: `${currentUser.userName}`
+        userName: `${currentUser.userName}`,
+        memberSinceDate: `${currentUser.memberSince}`,
     }) 
 
     return currentUser;
@@ -120,10 +121,6 @@ router.get('/tvShows', (req, res) => {
     })
 })
 
-router.get('/genres', (req, res) => {
-    res.render('genres')
-})
-
 router.get('/favourites', (req, res) => {
     res.status(200).render('favourites', {
         favourites: favouritedMovie,
@@ -131,7 +128,7 @@ router.get('/favourites', (req, res) => {
 })
 
 router.post('/favourites', (req, res) => {
-    favouritedMovie = req.body.movie;
+    favouritedMovie = req.body;
     
 
     console.log('favourited movie: ', favouritedMovie);
