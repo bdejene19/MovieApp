@@ -12,6 +12,7 @@
     <main>
         <div class="login-container">
             <form class="login-wrapper" method="POST" action="/browse">
+                <p id='login-error'></p>
                 <div class="myform">
                     <input type="text" name="userName" id="userName" required>
                     <label for="userName" class='userName-label'>
@@ -28,9 +29,8 @@
                 </div>
 
                 <div class='submission-btns'>
-                    <button type="submit" onkeypress="checkEnter()" class="btn login" id='login-btn'>Login</button>
+                    <button type="submit" onkeypress="checkEnter()" class="btn login" id='login-btn' onclick="unableToLogin()">Login</button>
                 </div>
-           
             </form>
         <form action='/createUser' method="GET">
             <button type="submit" name="signUp" id="signUp" class="btn sign-up" ref=>Sign-up</button>
@@ -43,7 +43,26 @@
             </div>
         </div>
         
-         
+        <script>
+            const unableToLogin = () => {
+
+                if (userPasswordNotFound !== null) {
+                document.getElementById('login-error').innerHTML = {{userPasswordNotFound}};
+                document.getElementById('userName').style.border = 'red solid 1px';
+                document.getElementById('passwod').style.border = 'red solid 1px';
+
+                setTimeout(() => {
+                    document.getElementById('login-error').innerHTML = '';
+                    document.getElementById('userName').style.border = 'none';  
+                    document.getElementById('password').style.border = 'none';
+                  
+                })
+                } 
+                else {
+                    continue
+                }
+            }
+        </script>
         
         <script>
             let fetchURL = 'https://api.themoviedb.org/3/movie/popular?api_key=27b6fe5df9c85fb31e3d874a62a2154b&language=en-US&page=1';

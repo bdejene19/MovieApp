@@ -37,8 +37,9 @@ router.post('/createUser', (req, res) => {
 
 
         if (userNameTaken !== null && userNameTaken) {
+            console.log(userNameTaken);
             res.status(200).render('createUser', {
-                alreadyExists: 'true',
+                alreadyExists: 'Sorry that user name is already taken',
             })
             
         }
@@ -72,25 +73,31 @@ router.post('/browse', (req, res) => {
     var userName = req.body.userName;
     var password = req.body.password;
 
-    User.findOne({userName: userName, password: password}, (err, user) => {
+    User.findOne({userName: userName}, (err, user) => {
         if (err) {
-            console.log("error has occured");
+            res.send(err);
         } 
 
-        if (!user) {
-            res.status(404).send('error occured')
-        }
-
         if (user) {
-            currentUser = user;
-            res.status(200).render('browse', {
-                name: currentUser.firstName,
-            });
+            if (user.password === password) {
+                currentUser = user;
+                res.status(200).render('browse', {
+                    name: currentUser.firstName,
+                });
+            }
+
+            if (user.password !== password) {
+                res.redirect('index');
+                res.render('index')
+            }
         }
 
-        else {
-            res.send('incorrect password/username')
-        };
+        if (!user) {
+            res.render('index', {
+
+            })
+        }
+ 
     })
     return currentUser;
 })
