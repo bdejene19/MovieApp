@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Browser</title>
+    <link rel="stylesheet" href="../public/styles.css">
+</head>
+<body onload="getConfig()"> 
+    <script>
+        function openNav() {
+            document.getElementById("mySidebar").style.width = "250px";
+            document.getElementById("main").style.marginLeft = "250px";
+        }
+        function closeNav() {
+            document.getElementById("mySidebar").style.width = "0";
+            document.getElementById("main").style.marginLeft= "0";
+        }
+    </script>
+    
+    <script>
+
+        const favourite = favourited => {
+            var currentFavourite = document.getElementById(favourited);
+            fetch('http://localhost:5000/favourites', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-type': 'application/json',
+                },
+                body: JSON.stringify({
+                    myFavourite: `${currentFavourite}`,
+                })
+            }).then(res => console.log(res))
+        }
+
+
+        let fetchURL = 'https://api.themoviedb.org/3/movie/popular?api_key=27b6fe5df9c85fb31e3d874a62a2154b&language=en-US&page=1';
+        let output = '';
+        var posterConfiguration = "";
+        var baseURL = "";
+        var posterSize= '';
+
+       
+        
+        var movieResults;
+        var tvShows;
+        const getConfig = () => {            
+            fetch('https://api.themoviedb.org/3/configuration?api_key=27b6fe5df9c85fb31e3d874a62a2154b')
+            .then(res => res.json())
+            .then(data => {
+                baseURL = data.images.base_url;
+                posterSize = data.images.poster_sizes[3];
+                posterConfiguration = baseURL + posterSize;
+
+               
+            
+                fetch(fetchURL)
+                .then((data) => data.json())
+                .then(res => {
+                    movieResults = res.results;
+                    let imgPath = '';
+                    let backdropPath = '';
+                    for (index in movieResults) {
+                        var idVal =  movieResults[index].title;
+                        idVal = idVal.replace(/\s/g, '-')
+                        imgPath = posterConfiguration + movieResults[index].poster_path;
+                        backdropPath = posterConfiguration + movieResults[index].backdrop_path;
+
+                        // find a way to set value of favourite button as the whole div
+                        output += `
+                            <div class="movie-content" id=${idVal}>
+                                <img src=${imgPath} alt="poster path">
+                                <div class="ratings-content"> 
+                                    <h5> TMDb vote average: ${movieResults[index].vote_average}</h4>
+                                    <h5> Votes: ${movieResults[index].vote_count} </h5>
+                                </div>  
+
+                                <img src="https://www.flaticon.com/svg/static/icons/svg/130/130195.svg" alt='favourites logo' id='favouritesLogo' onclick='favourite("${idVal}")'>
+                            </div>
+                        `
+                    }
+
+                    document.getElementById('popular-movies').innerHTML = output
+                }).catch(err => console.log('there was an error'))
+                
+                    
+
+                fetch('https://api.themoviedb.org/3/tv/popular?api_key=27b6fe5df9c85fb31e3d874a62a2154b&language=en-US&page=1')
+                .then(res => res.json())
+                .then(data => {
+                    tvShows = data.results;
+                    let imgPath = '';
+                    let backdropPath = '';
+                    let shows = '';
+                    console.log('tv shows: ', data);
+                    for (index in tvShows) {
+                        var idVal =  tvShows[index].original_name;
+                        idVal = idVal.replace(/\s/g, '-')
+                        
+                        imgPath = posterConfiguration + tvShows[index].poster_path;
+                        backdropPath = posterConfiguration + tvShows[index].backdrop_path;
+                        shows += `
+                            <div class="movie-content" id=${idVal}>
+                                <img src=${imgPath} alt="poster path">
+                                <div class="ratings-content"> 
+                                    <h5> TMDb vote average: ${tvShows[index].vote_average}</h4>
+                                    <h5> Votes: ${tvShows[index].vote_count} </h5>
+                                </div>
+                                <input type='image' src="https://www.flaticon.com/svg/static/icons/svg/130/130195.svg" alt='favourites logo' id='favouritesLogo' onclick='favourite("${idVal}")'>
+                            </div>
+                        `
+                    }
+                    document.getElementById('popular-shows').innerHTML = shows
+                }).catch(err => console.log('there was an error'));
+            }).catch(err => console.log('there was an error'));
+        }
+    </script>
+
+  
+    <navBar class="nav">
+        <button class="openbtn" onclick="openNav()">☰ Open Sidebar</button>  
+        <h2 id="title">Hi {{name}}! What do you want to watch today?</h2>
+
+    </navBar> 
+
+    <div id="mySidebar" class="sidebar" >
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+        <a href="./browse" class="link-btn" id='home'>Home</a>
+        <a href="./accounts" id='account'>Account</a>
+        <a href="./favourites" id='favourites'>Favourite</a>
+        <a href="./movies">Movies</a>
+        <a href="./tvShows">TV Shows</a>
+        <a href="./index">Sign-out</a>
+
+    </div>
+    
+    <div id="main">
+    </div>
+
+    <div class="browseSelection">
+        <h2 class="content-title">Whats popular</h2>
+        <div class="content-row" id='movie-row'>
+
+            <form method="POST" action="/favourites">
+                <div  id="popular-movies" class="popular">
+                
+                </div>
+            </form>
+         
+        </div>
+
+         <div class="buttons-container">
+            <img src="https://www.flaticon.com/svg/static/icons/svg/318/318477.svg" alt="left scroll icon" class="btn btn-left" id='left-movie' onclick="movieSlides(79.2)">
+            <img src="https://www.flaticon.com/svg/static/icons/svg/181/181669.svg" alt="right scroll icon" class="btn btn-right" id='right-movie' onclick="movieSlides(-79.2)">
+        </div>
+        <br><br>
+        <h2 class="content-title">Top TV Shows</h2>
+
+        <div class="content">
+            <div class="content-row">
+                <form method="POST" action="/favourites">
+                    <div id="popular-shows" class="popular">
+
+                    </div>
+                </form>
+                
+        </div>
+        <div class="buttons-container">
+            <img src="https://www.flaticon.com/svg/static/icons/svg/318/318477.svg" alt="left scroll icon" class="btn btn-left" id='left-show' onclick="tvSlides(79.2)">
+            <img src="https://www.flaticon.com/svg/static/icons/svg/181/181669.svg" alt="right scroll icon" class="btn btn-right" id='right-show' onclick="tvSlides(-79.2)">
+
+        </div>
+       
+    </div>
+        <br><br>
+
+    <script>
+        let movieIndex = 0;
+        let showIndex = 0;
+        
+        document.getElementById('left-movie').style.display = 'none';
+        document.getElementById('left-show').style.display = 'none';
+        let movieSlides = (n) => {
+            movieIndex += n;
+            document.getElementById('popular-movies').style.transition = `1s`;
+            document.getElementById('popular-movies').style.transform = `translateX(${movieIndex}vw`;
+
+            if (movieIndex > -1) {
+                document.getElementById('left-movie').style.display = 'none';
+            } 
+            
+            if (movieIndex < -1) {
+                document.getElementById('left-movie').style.display = 'inline-block';
+            } 
+
+            if (movieIndex == (n*4)) {
+                document.getElementById('right-movie').style.display = 'none';
+            } 
+            
+            if (movieIndex !== (n*4)) {
+                document.getElementById('right-movie').style.display = 'inline-block';
+            }
+            return movieIndex;
+        }
+
+        let tvSlides = (n) => {
+            showIndex += n;
+            document.getElementById('popular-shows').style.transition = `1s`;
+            document.getElementById('popular-shows').style.transform = `translateX(${showIndex}vw`;
+            if (showIndex > -1) {
+                document.getElementById('left-show').style.display = 'none';
+            } 
+            if (showIndex < -1) {
+                document.getElementById('left-show').style.display = 'inline-block';
+            }
+            if (showIndex == (n*4)) {
+                document.getElementById('right-show').style.display = 'none';
+            } 
+
+            if (showIndex !== (n*4)) {
+                document.getElementById('right-show').style.display = 'inline-block';
+
+            }
+            
+          
+            return showIndex;
+        }
+    </script>
+    
+  
+</body>
+</html>

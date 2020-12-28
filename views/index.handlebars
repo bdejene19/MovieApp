@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie App</title>
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body onload ="formCube()">
+    <h1 id="title" >{{title}}</h1>
+    <main>
+        <div class="login-container">
+            <form class="login-wrapper" method="POST" action="/browse" id='loginForm'>
+                <p id='login-error'></p>
+                <div class="myform">
+                    <input type="text" name="userName" id="userName" required>
+                    <label for="userName" class='userName-label'>
+                        <span class="userName-content">Username</span>
+                    </label>
+                </div>
+                
+                <div class="myform">
+                    <input type="password"  name="password" id="password" required>
+                    <label for="password" class='userName-label'>
+                        <span class="userName-content">Password</span>
+                    </label>
+
+                </div>
+
+                <div class='submission-btns'>
+                    <button type="submit" onkeypress="checkEnter()" class="btn login" id='login-btn' onclick="unableToLogin()">Login</button>
+                </div>
+            </form>
+            <a href="/createUser"><button id="signUp" class="btn sign-up">Sign-up</button></a>
+
+
+
+        </div>
+         <div class="cube-wrap">
+            <div class="cube" id='cube'>
+            </div>
+        </div>
+        
+        <script>
+            const unableToLogin = () => {
+                //come back
+                if () {
+                    
+                    document.getElementById('login-error').innerHTML = 'Error found';
+                    document.getElementById('userName').style.border = 'red solid 1px';
+                    document.getElementById('passwod').style.border = 'red solid 1px';
+                    console.log('if not submit')
+
+                    setTimeout(() => {
+                        document.getElementById('login-error').innerHTML = '';
+                        document.getElementById('userName').style.border = 'none';  
+                        document.getElementById('password').style.border = 'none';
+                    
+                    })
+                } 
+
+                if (!document.getElementById('loginForm').onsubmit()) {
+                    console.log('submitted if statement')
+                }
+               
+            }
+        </script>
+        
+        <script>
+            let fetchURL = 'https://api.themoviedb.org/3/movie/popular?api_key=27b6fe5df9c85fb31e3d874a62a2154b&language=en-US&page=1';
+            let cubeImgs = '';
+            var posterConfiguration = "";
+            var baseURL = "";
+            var posterSize= '';
+
+            const formCube = () => {
+                fetch('https://api.themoviedb.org/3/configuration?api_key=27b6fe5df9c85fb31e3d874a62a2154b')
+                .then(res => res.json())
+                .then(data => {
+                    baseURL = data.images.base_url;
+                    posterSize = data.images.poster_sizes[3];
+                    posterConfiguration = baseURL + posterSize;
+                    console.log(data)
+                    fetch(fetchURL)
+                    .then(res => res.json())
+                    .then(data => {
+                        const movies = data.results;
+                        let imgPath = '';
+                        let backdropPath = '';
+                        for (index in movies) {
+                            imgPath = posterConfiguration + movies[index].poster_path;
+
+                            if (index < 6) {
+                                cubeImgs += `<img src=${imgPath} alt="poster path">`
+                            } else {
+                                break;
+                            }
+                        }
+    
+                        document.getElementById('cube').innerHTML = cubeImgs;
+                        console.log('cube formed')
+                    })
+                }).catch(err => console.log('there was an error'))
+            }
+        </script>
+        
+        
+    </main>
+
+</body>
+</html>

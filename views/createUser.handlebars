@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account</title>
+    <link rel="stylesheet" href="../public/styles.css">
+
+</head>
+<body>
+    <div class="signup-form" id='sign-up'>
+
+        <form action="/createUser" method="POST" class='create-user'>
+            <h1>Let's get you going!</h1>
+
+            <div class="input-container">
+                <label for='firstName' class='name'>First name:</label><br>
+                <input type="text" name="firstName" id="firstName" placeholder="e.g. John" class='name-input' required>
+            </div>
+            
+            <div class="input-container">
+                <label for='lastName' class='name'>Last name:</label><br>
+                <input type="text" name="lastName" id="lastName" placeholder="e.g. Doe" class='name-input' required>
+            </div>
+        
+            <div class="input-container">
+                <p id='username-error' onload="errorTimeout()">{{alreadyExists}}</p>
+
+                <label for='userName' class='name'>Create username:</label><br>
+                <input type="text" name="userName" id="userName" class='name-input' id='userName' required>
+            </div>
+
+            <div class="input-container">
+                <p id='error-message'></p>
+                <label for='pswd' class='name'>Password:</label><br>
+                <input type="password" name="pswd" id="pswd" class='name-input' required>
+            </div>
+
+            <div class="input-container">
+                <label for="pswdRepeat" class='name'>Re-enter password:</label><br>
+                <input type="password" name="pswdRepeat" id="pswdRepeat" class='name-input' required>
+            </div>
+            <br>
+                <button class="signUp-btn" onclick="submissionCheck()">Submit and start watching!</button>
+
+            <br>
+
+        </form>
+    </div>
+    <script>
+        const submissionCheck = () =>{
+            var pswd = document.getElementById('pswd').value;
+            var repeatPSWD = document.getElementById('pswdRepeat').value
+            // have set up create password comparison => however, still need to verify username
+            if (pswd !== repeatPSWD) {
+                document.getElementById('sign-up').addEventListener('click', (e) => {
+                e.preventDefault();
+                })
+                document.getElementById('error-message').innerHTML = `You're passwords do not match.`
+                document.getElementById('pswd').style.border = 'red solid 1px'
+                document.getElementById('pswdRepeat').style.border = 'red solid 1px'
+
+                setTimeout(() => {
+                    document.getElementById('pswd').style.border = 'none'
+                    document.getElementById('pswdRepeat').style.border = 'none'
+                    document.getElementById('error-message').innerHTML = ``
+
+                }, 5000)
+            }
+        }
+    </script>
+</body>
+</html>

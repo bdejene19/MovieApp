@@ -1,0 +1,526 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+body {
+    background-color: #6a1b9a;
+}
+
+#title {
+    padding: 1%;
+    font-size: 28px;
+    color: skyblue;
+    font-weight: bold;
+    background: #4a126b;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+
+.buttons-container {
+    display: flex;
+}
+
+#favouritesLogo {
+    width: 3vw;
+    cursor: pointer;
+}
+.btn {
+    width: 6vw;
+    height: 6vh;
+    text-align: center;
+    position: absolute;
+    cursor: pointer;
+}
+
+.btn-left { 
+    margin-left: 2%;
+    margin-top: -35vh;
+}
+
+.btn-right {
+    margin-left: 91.5%;
+    margin-top: -35vh;
+}
+
+.nav {
+    width: 100vw;
+    display: grid;
+    grid-template-columns: 18vw 82vw;
+    grid-template-rows: auto;
+}
+
+nav > .openbtn {
+    grid-column: 1;
+}
+nav h1 {
+    grid-column: 2;
+    text-align: right;
+    font-family: sans-serif;
+
+}
+
+.nav-button {
+    width: 100%;
+    height: 10%;
+    border: solid brown 2px;
+    text-align: center;
+    visibility: hidden;
+}
+
+
+
+.cameraLogo {
+    width: 25%;
+    margin-left: 3vw;
+    margin-top: -100vh;
+    transform: translateY(-40vh);
+    transform: rotateY('30deg');
+    border-radius: 50%;
+    border: solid green 5px;
+}
+
+.sidebar {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    text-align: left;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+}
+  
+.sidebar a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidebar a:hover {
+    color: #f1f1f1;
+    background: rgb(182, 182, 182);
+
+}
+
+.sidebar .closebtn {
+    position: absolute;
+    top: 0;
+    right: 0px;
+    font-size: 36px;
+    padding-right: 30px;
+    text-align: center;
+    box-sizing: content-box;
+}
+
+.openbtn {
+    font-size: 20px;
+    cursor: pointer;
+    background-color: #111;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+}
+
+.openbtn:hover {
+    background-color: #444;
+}
+
+#main {
+    transition: margin-left .5s;
+}
+.login-container {
+    width: 50%;
+    align-items: center;
+    transform: translate(50%, 20%);
+}
+.login-container button {
+    display: block;
+    background-color: gainsboro;
+    transform: translate(16vw, 5vh);
+    opacity: 0.5;
+    transition: 0.8s all;
+    border-radius: 5px;
+    border: none;
+    color: black;
+}
+
+.login-container button:hover {
+    background-color: magenta;
+    transition: 0.8s all;
+    border: solid white 3px;
+    box-shadow: 0 0 10px;
+    color: white;
+    
+}
+
+
+#login-btn {
+    transform: translate(-10%, 6.5vh);
+}
+.login-wrapper {
+    display: flex;
+    flex-direction: column;
+    font-family: sans-serif;
+    align-items: center;
+    justify-content: space-around;
+    height: 35vh;
+    border: solid white 3px;
+    box-shadow: grey 7px 7px;
+    background-image: url('https://themotherofallnerds.com/wp-content/uploads/2019/09/829640-gorgerous-movie-backgrounds-1920x1080-ipad-pro.jpg');
+    background-size: cover;  
+
+}
+
+.myform {
+    margin: 3%;
+    width: 50%;
+    position: relative;
+    height: 50px;
+    overflow: hidden;
+}
+
+
+.myform input {
+    width: 100%;
+    height: 100%;
+    color: #595f6e;
+    padding-top: 20px;
+    border: none;
+}
+
+.myform label {
+    position: absolute;
+    bottom: 0px;
+    left: 0%;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    border-bottom: 1px solid black;
+}
+
+.myform label::after {
+    content: "";
+    position: absolute;
+    left: 0px;
+    bottom: -1px;
+    height: 100%;
+    width: 100%;
+    border-bottom: 3px solid #5fa8d3;
+    transform: translateX(-100%);
+    transition: 0.4s ease all;
+}
+
+.userName-content {
+    position: absolute;
+    bottom: 5px;
+    left: 0px;
+    transition: all 0.3s ease;
+}
+
+/** focus attribute allows you to do something everytime something is focused on (e.g. input click) 
+Everytime the input is focused on, the label is being affected
+also checks if the input is valid since it is required
+*/
+.myform input:focus + .userName-label .userName-content, .myform input:valid + .userName-label .userName-content{
+    transform: translateY(-150%);
+    color: #5fa8d3;
+}
+
+.myform input:focus + .userName-label::after, .myform input:valid + .userName-label::after {
+    transform: translateX(0%)
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+    .sidebar {padding-top: 15px;}
+    .sidebar a {font-size: 18px;}
+}
+
+
+@keyframes loop { 
+    from {transform: rotateX(0deg) rotateY(0deg);}
+    to {transform: rotateX(360deg) rotateY(360deg);}
+}
+
+.cube-wrap {
+    perspective: 1100px;
+    perspective-origin: 50% 50%;
+    width: fit-content;
+    margin-left: 8%;
+    margin-top: 8%;
+    margin-left:75%;
+
+    
+}
+.cube {
+    transform-style: preserve-3d;
+    width: 200px;
+    height: 200px;
+    position: relative;
+    margin: auto;
+    animation: loop 10s linear infinite;
+}
+
+.cube img {
+    position: absolute;
+    opacity: 0.8;
+    width: 200px;
+    height: 200px;
+}
+
+.cube img:nth-child(1) {
+    transform: rotateY(0deg) translateZ(100px);
+}
+
+.cube img:nth-child(2) {
+    transform: rotateY(90deg) translateZ(100px);
+}
+
+.cube img:nth-child(3) {
+    transform: rotateY(180deg) translateZ(100px);
+}
+
+.cube img:nth-child(4) {
+    transform: rotateY(-90deg) translateZ(100px);
+}
+
+.cube img:nth-child(5) {
+    transform: rotateX(90deg) translateZ(100px);
+}
+
+.cube img:nth-child(6) {
+    transform: rotateX(-90deg) translateZ(100px);
+}
+
+
+/** browse app styling begins here */
+.browseSelection {
+    width: 100vw;
+    height: fit-content;
+    background-color: #6a1b9a;
+}
+
+.browseSelection h2 {
+    padding: 1%;
+    color: white;
+    font-weight: bold;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+
+.content-row {
+    text-align: center;
+    border: solid coral 7px;
+    overflow: hidden;
+    margin-left: 9vw;
+    margin-right: 8.5vw;
+    width: 81vw;
+    height: 68vh;
+    position: relative;
+    background-color: #4a126b;
+}
+
+
+
+.popular {
+    color: white;
+    width: 80vw;
+    font-weight: bold;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    display: flex;
+    flex-direction: row;
+   
+}
+
+
+
+.movie-content img {
+    width: 15vw;
+    
+}
+
+.movie-content {
+    opacity: 0.5;
+    width: fit-content;
+    padding: 3.0%;
+    color: white;
+    position: relative;
+    height: 66vh;
+}
+
+.movie-content:hover {
+    opacity: 1;
+    border: solid white 5px;
+}
+
+.ratings-content {
+    margin-top: 7vh;
+    text-align: left;
+}
+.movie-content .ratings-content {
+    display: inline-block;
+}
+
+/** accounts page styling begins here*/
+
+.account-wrapper {
+    width: 30%;
+    transform: translate(115%, 30%);
+    text-align: center;
+    justify-content: space-around;
+    border: solid black 3px;
+    color: white;
+    padding: 1.5%;
+    box-shadow: 0 0 30px;
+    
+}
+.account-wrapper img {
+    width: 15vw;
+  
+}
+.account-wrapper > .user-info {
+    width: 100%;
+    padding: 3%;
+}
+
+.user-info p {
+    text-align: left;
+}
+.input-container {
+    padding: 1%;
+}
+
+#moviesPage-container { 
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-template-rows: auto;
+    text-align: center; 
+}
+
+#moviesPage-container img {
+    height: 60vh;
+    width: 100%;
+}
+
+#moviesPage-container .movie {
+    height: 100%;
+    width: fit-content
+}
+
+#moviesPage-container .movie .ratings-content {
+    height: 0%;
+    padding: 0;
+    margin-top: -1%;
+    transition: 1s height linear;
+    background-color: gainsboro;
+    overflow: hidden;
+}
+
+#moviesPage-container .movie:hover  .ratings-content{
+    height: 40%;
+    transition: 1s linear;
+}
+
+#moviesPage-container .movie {
+    padding: 3vw;
+    margin-bottom: 10vh;;
+
+}
+
+.movie > .ratings-content {
+    margin-top: 0;
+}
+
+/** beginning of shows page styling */
+#showsPage-container img {
+    height: 60vh;
+    width: 100%;
+}
+
+#showsPage-container .movie {
+    height: 100vh;
+}
+
+#showsPage-container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-template-rows: auto;
+    text-align: center;
+}
+
+#showsPage-container .movie .ratings-content {
+    height: 0%;
+    padding: 0;
+    margin-top: -1%;
+    transition: 1s height linear;
+    background-color: gainsboro;
+    overflow: hidden;
+}
+
+#showsPage-container .movie:hover  .ratings-content{
+    height: 40%;
+    transition: 1s linear;
+}
+
+.movie img {
+    height: 60vh;
+    width: 100%;
+}
+
+#showsPage-container .movie {
+    padding: 3vw;
+
+}
+/** beginning of sign-up page styling*/
+.signup-form {
+    display: flex;
+    flex-direction: column; 
+    justify-content: space-around;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5%;
+    color: white;
+    position: relative;
+}
+
+.signup-form p {
+    color: red;
+}
+
+
+.signUp-btn {
+    width: fit-content;
+    height: 25px;
+    padding: 1.5%;
+
+}
+.signUp-btn:hover {
+    background-color: rgb(201, 87, 201);
+    border: none;
+    transition: all 0.5 linear;
+}
+.create-user {
+    width: 30%;
+    display: flex;
+    flex-direction: column; 
+    justify-content: space-around;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    border: solid grey 5px;
+    border-radius: 3px;
+}
+.input-container {
+    padding: 3%;
+    width: 50%;
+    height: fit-content;
+}
