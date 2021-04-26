@@ -164,7 +164,7 @@ nav h1 {
 
 
 #login-btn {
-    transform: translate(-10%, 6.75vh);
+    transform: translate(-10%, 6.5vh);
 }
 .login-wrapper {
     display: flex;
@@ -496,8 +496,7 @@ also checks if the input is valid since it is required
     color: red;
 }
 
-.signUp-btn-container {
-}
+
 .signUp-btn {
     width: fit-content;
     height: 25px;

@@ -11,7 +11,7 @@
     <h1 id="title" >{{title}}</h1>
     <main>
         <div class="login-container">
-            <form class="login-wrapper" method="POST" action="/browse">
+            <form class="login-wrapper" method="POST" action="/browse" id='loginForm'>
                 <p id='login-error'></p>
                 <div class="myform">
                     <input type="text" name="userName" id="userName" required>
@@ -32,9 +32,8 @@
                     <button type="submit" onkeypress="checkEnter()" class="btn login" id='login-btn' onclick="unableToLogin()">Login</button>
                 </div>
             </form>
-        <form action='/createUser' method="GET">
-            <button type="submit" name="signUp" id="signUp" class="btn sign-up" ref=>Sign-up</button>
-        </form>
+            <a href="/createUser"><button id="signUp" class="btn sign-up">Sign-up</button></a>
+
 
 
         </div>
@@ -45,22 +44,26 @@
         
         <script>
             const unableToLogin = () => {
+                //come back
+                if () {
+                    
+                    document.getElementById('login-error').innerHTML = 'Error found';
+                    document.getElementById('userName').style.border = 'red solid 1px';
+                    document.getElementById('passwod').style.border = 'red solid 1px';
+                    console.log('if not submit')
 
-                if (userPasswordNotFound !== null) {
-                document.getElementById('login-error').innerHTML = {{userPasswordNotFound}};
-                document.getElementById('userName').style.border = 'red solid 1px';
-                document.getElementById('passwod').style.border = 'red solid 1px';
-
-                setTimeout(() => {
-                    document.getElementById('login-error').innerHTML = '';
-                    document.getElementById('userName').style.border = 'none';  
-                    document.getElementById('password').style.border = 'none';
-                  
-                })
+                    setTimeout(() => {
+                        document.getElementById('login-error').innerHTML = '';
+                        document.getElementById('userName').style.border = 'none';  
+                        document.getElementById('password').style.border = 'none';
+                    
+                    })
                 } 
-                else {
-                    continue
+
+                if (!document.getElementById('loginForm').onsubmit()) {
+                    console.log('submitted if statement')
                 }
+               
             }
         </script>
         

@@ -46,7 +46,6 @@
             .then(data => {
                 console.log(data)
                 const genre = data.genres;
-                console.log(genre);
                 for (show in genre) {
                     output += `<div class='genre-type'>
                           <h2> ${genre[show].name} </h2>

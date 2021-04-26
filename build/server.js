@@ -4,6 +4,7 @@ const exphbs = require('express-handlebars');
 const mongo = require('mongoose')
 require('dotenv/config');
 const path = require('path');
+const cors = require('cors');
 
 
 // initalize express/handlebars
@@ -16,6 +17,7 @@ app.set('views', path.join(__dirname, 'views'));
 // adding body parser to server, also adding url encoded data handler
 app.use(express.json());
 app.use(express.urlencoded({extended: false}))
+app.use(cors());
 
 app.get('/', (req, res) => { 
     res.render('index', {

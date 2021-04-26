@@ -34,7 +34,8 @@ router.post('/createUser', (req, res) => {
         if (err) {
             console.log('there was an error');
         }
-
+	
+	
 
         if (userNameTaken !== null && userNameTaken) {
             console.log(userNameTaken);
@@ -88,14 +89,11 @@ router.post('/browse', (req, res) => {
 
             if (user.password !== password) {
                 res.redirect('index');
-                res.render('index')
             }
         }
 
         if (!user) {
-            res.render('index', {
-
-            })
+            res.redirect('index');
         }
  
     })
@@ -136,9 +134,13 @@ router.get('/favourites', (req, res) => {
 
 router.post('/favourites', (req, res) => {
     favouritedMovie = req.body;
-    
-
-    console.log('favourited movie: ', favouritedMovie);
+    try {
+        User.findOneAndUpdate({"userName": `${currentUser.userName}`}, {$push: {favourites: 'helloworld'}}, () => console.log('update occured'))
+        console.log(currentUser)
+    }
+    catch(e) {
+        console.log(e)
+    }
 })
 
 router.get('/index', (req, res) => {

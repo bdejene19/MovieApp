@@ -19,12 +19,20 @@
     </script>
     
     <script>
-        var currFavourite ='';
-        const favourite = favourited => {
-            var idValue = favourited;
-            console.log('hello');
-        }
 
+        const favourite = favourited => {
+            var currentFavourite = document.getElementById(favourited);
+            fetch('http://localhost:5000/favourites', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-type': 'application/json',
+                },
+                body: JSON.stringify({
+                    myFavourite: `${currentFavourite}`,
+                })
+            }).then(res => console.log(res))
+        }
 
 
         let fetchURL = 'https://api.themoviedb.org/3/movie/popular?api_key=27b6fe5df9c85fb31e3d874a62a2154b&language=en-US&page=1';
@@ -68,7 +76,7 @@
                                     <h5> Votes: ${movieResults[index].vote_count} </h5>
                                 </div>  
 
-                                <img src="https://www.flaticon.com/svg/static/icons/svg/130/130195.svg" alt='favourites logo' id='favouritesLogo' onclick='favourites()'>
+                                <img src="https://www.flaticon.com/svg/static/icons/svg/130/130195.svg" alt='favourites logo' id='favouritesLogo' onclick='favourite("${idVal}")'>
                             </div>
                         `
                     }
@@ -99,10 +107,8 @@
                                     <h5> TMDb vote average: ${tvShows[index].vote_average}</h4>
                                     <h5> Votes: ${tvShows[index].vote_count} </h5>
                                 </div>
-                                <img src="https://www.flaticon.com/svg/static/icons/svg/130/130195.svg" alt='favourites logo' id='favouritesLogo' onclick='favourites()'>
-
+                                <input type='image' src="https://www.flaticon.com/svg/static/icons/svg/130/130195.svg" alt='favourites logo' id='favouritesLogo' onclick='favourite("${idVal}")'>
                             </div>
-
                         `
                     }
                     document.getElementById('popular-shows').innerHTML = shows
@@ -110,6 +116,8 @@
             }).catch(err => console.log('there was an error'));
         }
     </script>
+
+  
     <navBar class="nav">
         <button class="openbtn" onclick="openNav()">☰ Open Sidebar</button>  
         <h2 id="title">Hi {{name}}! What do you want to watch today?</h2>
