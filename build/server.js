@@ -2,7 +2,6 @@
 const express = require('express');
 const exphbs = require('express-handlebars');
 const mongo = require('mongoose')
-require('dotenv/config');
 const path = require('path');
 const cors = require('cors');
 
@@ -34,5 +33,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // connecting to server
 mongo.connect(process.env.DB_CONNECTION, { useNewUrlParser: true, useUnifiedTopology: true}, console.log('connected to db'));
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
